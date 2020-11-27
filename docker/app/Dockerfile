@@ -12,6 +12,12 @@ RUN apk add --no-cache \
             libpng-dev \
             $PHPIZE_DEPS
 
+# atualiza timezone do php
+RUN pecl install timezonedb
+RUN docker-php-ext-enable timezonedb
+
+
+
 RUN docker-php-ext-install pdo pdo_mysql bcmath
 RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
 RUN docker-php-ext-install -j$(nproc) gd

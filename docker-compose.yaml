@@ -13,6 +13,8 @@ services:
     volumes:
       - .:/var/www
       - ./docker/app/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"      
     networks:
       - app-network
     depends_on:
@@ -31,6 +33,8 @@ services:
       WAIT: -wait tcp://app:9000
     volumes:
       - .:/var/www
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"        
     networks:
       - app-network
     depends_on:
@@ -47,6 +51,8 @@ services:
     volumes:
       - ./docker/dbdata:/var/lib/mysql
       - ./docker/mysql:/docker-entrypoint-initdb.d
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"        
     environment:
       - MYSQL_DATABASE=env_db
       - MYSQL_ROOT_PASSWORD=root
