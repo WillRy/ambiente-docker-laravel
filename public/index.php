@@ -1,5 +1,5 @@
 <?php 
-echo 'teste';
-echo '<br>';
-echo date('d-m-Y H:i:s');
+$data = 'some data'.PHP_EOL;
+$fp = fopen('somefile', 'a');
+fwrite($fp, $data);
 ?>
