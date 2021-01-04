@@ -11,7 +11,7 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     libpng-dev \
     $PHPIZE_DEPS
-RUN docker-php-ext-install pdo pdo_mysql bcmath
+RUN docker-php-ext-install pdo pdo_mysql bcmath mbstring exif gd
 
 RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
 
