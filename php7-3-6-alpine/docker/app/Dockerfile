@@ -1,22 +1,26 @@
 FROM php:7.3.6-fpm-alpine3.10
 
 RUN apk add --no-cache \
+    #shadow->usermod
     shadow \
     openssl \
     bash \
     mysql-client \
     nodejs \
     npm \
+    #GD
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    #imagick
+    imagemagick-dev \
     $PHPIZE_DEPS
-RUN docker-php-ext-install pdo pdo_mysql bcmath mbstring exif gd
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd
 
 RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+RUN pecl install xdebug imagick \
+    && docker-php-ext-enable xdebug imagick
 
 # atualiza timezone do php
 RUN pecl install timezonedb

@@ -1,31 +1,20 @@
 # Ambiente de Desenvolvimento - Laravel, MySQL 8, Redis e Suporte a MIX e Node.JS
 
 
-Este ambiente de desenvolvimento permite executar aplicações Laravel, dando suporte para:
- - Laravel Mix(incluindo o hot reload do npm run watch)
- - GD e plugins imagick e xdebug
- - REDIS para filas
- - MySQL 8
+Este ambiente de desenvolvimento permite executar aplicações Laravel, dando suporte
+a utilização do Laravel Mix(incluindo o hot reload do npm run watch) e também 
+a utilização do Redis para apoio em filas.
 
 ## Organização do ambiente
 
-O ambiente está dividido em pastas contendo versões do PHP, seguindo o padrão:
-
-"php-<versao>-<sistema-operacional>"
 
 ## Como o ambiente funciona
-O ambiente foi dividido em 3 principais containers:
+* Há um container alpine do PHP 7.3 já configurada com o GD e também XDEBUG. Este container também permite a personalização
+do php.ini, através de um arquivo **custom.ini** montado via bind volume.
 
-- app: contendo o PHP FPM, com os respectivos plugins e o XDEBUG. . Este container também permite a personalização
-  do php.ini, através de um arquivo **custom.ini** montado via bind volume.
+* Há um container do NGINX para se comunicar com o PHP
 
-- nginx: Se comunica com o PHP-FPM via FAST-CGI
-
-- mysql8: Container com o DB e script de inicialização
-
-- redis: Livre para customizações
-
-Principais ferramentas usadas internamente nos containers:
+* Há outros containers para o MySQL e para o Redis.
 
 * Foi aplicada a utilização da biblioteca dockerize nos containers, para
   permitir que os containers respeitam a ordem correta de inicialização.
@@ -49,7 +38,7 @@ pelos containers.
 
 ## Como executar o ambiente?
 
-* Clone o repositório, copie a pasta da versão do php/SO desejado e copie para dentro do projeto a pasta ./docker e o arquivo: docker-compose.yaml
+* Baixe o ambiente e copie para dentro do projeto a pasta ./docker e o arquivo: docker-compose.yaml
 
 * Em seguida configure no .env as credenciais do banco de dados. Lembrando que o host deve ser o nome do serviço docker responsável pelo banco, neste caso é **db**. As credenciais podem ser encontradas no **docker-compose.yaml**
 
