@@ -65,8 +65,9 @@ docker-compose up -d
 
 http://localhost:8000
 
-* Adicione no seu .gitignore o caminho **docker/dbdata**,
-que é o local onde estão os arquivos gerados pelo mysql.
+* Adicione no seu .gitignore os seguintes itens:
+  * docker/dbdata: local onde estão os arquivos gerados pelo mysql
+  * .composer: cache gerado pelo composer 2
 
 ## Exemplo de configuração das IDEs para debuggar
 
