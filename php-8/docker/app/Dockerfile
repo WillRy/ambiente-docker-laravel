@@ -12,9 +12,11 @@ RUN apt-get update && \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
+    #Intl
+    libicu-dev \
     #limpa apt
-    && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl
 
 # RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
 

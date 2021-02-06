@@ -14,8 +14,10 @@ RUN apk add --no-cache \
     libpng-dev \
     #imagick
     imagemagick-dev \
+    #intl
+    icu-dev \
     $PHPIZE_DEPS
-RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl
 
 RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
 
