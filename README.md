@@ -11,7 +11,7 @@ Este ambiente de desenvolvimento permite executar aplicações Laravel, dando su
 
 O ambiente está dividido em pastas contendo versões do PHP, seguindo o padrão:
 
-"php-<versao>-<sistema-operacional>"
+**php-"versao"-"sistema-operacional"**
 
 ## Como o ambiente funciona
 O ambiente foi dividido em 3 principais containers:
@@ -74,14 +74,14 @@ O Xdebug está **configurado na porta 9001**, para evitar conflitos com o PHP-FP
 
 **PHPSTORM**
 
-![PHPSTORM](./docker/midias/php-storm.png)
+![PHPSTORM](./midias/php-storm.png)
 
 > Nota-se que o **name** e **host** são de acordo com o server_name do nginx.conf
 
 
 **VSCODE**
 
-![VSCODE](./docker/midias/vscode.png)
+![VSCODE](./midias/vscode.png)
 
 > A configuração é a com nome de "XDEBUG-DOCKER"
 
