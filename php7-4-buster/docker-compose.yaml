@@ -14,7 +14,7 @@ services:
       - .:/var/www
       - ./docker/app/custom.ini:/usr/local/etc/php/conf.d/custom.ini
       - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"      
+      - "/etc/localtime:/etc/localtime:ro"
     networks:
       - app-network
     depends_on:
@@ -34,11 +34,32 @@ services:
     volumes:
       - .:/var/www
       - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"        
+      - "/etc/localtime:/etc/localtime:ro"
     networks:
       - app-network
     depends_on:
       - app
+
+  # apache:
+  #   build: docker/apache
+  #   container_name: apache
+  #   entrypoint: /var/www/docker/apache/entrypoint.sh
+  #   restart: always
+  #   tty: true
+  #   ports:
+  #     - "8000:80"
+  #   environment:
+  #     WAIT: -wait tcp://app:9000
+  #   volumes:
+  #     - .:/var/www
+  #     - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+  #     - ./docker/apache/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+  #     - "/etc/timezone:/etc/timezone:ro"
+  #     - "/etc/localtime:/etc/localtime:ro"
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - app
 
   db:
     build: docker/mysql
@@ -52,7 +73,7 @@ services:
       - ./docker/dbdata:/var/lib/mysql
       - ./docker/mysql:/docker-entrypoint-initdb.d
       - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"        
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
       - MYSQL_DATABASE=env_db
       - MYSQL_ROOT_PASSWORD=root
