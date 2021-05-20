@@ -11,5 +11,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 RUN mkdir -p /var/www
 
+WORKDIR /var/www
+
 RUN usermod -u 1000 daemon
 

@@ -77,7 +77,6 @@ services:
     environment:
       - MYSQL_DATABASE=env_db
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=root
     networks:
       - app-network
 

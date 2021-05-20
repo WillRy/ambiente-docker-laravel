@@ -26,8 +26,6 @@ O ambiente foi dividido em 4 principais containers:
 - mysql8: Container com o DB e script de inicialização
 
 - redis: Livre para customizações
-  
-  
 
 Principais ferramentas usadas internamente nos containers:
 
@@ -39,13 +37,9 @@ Principais ferramentas usadas internamente nos containers:
 
 * O container do **nginx/apache, espera o PHP estar disponível**
 
-
-
 ### Servidores
 
 Por padrão está configurado o **NGINX**, porém no **docker-compose.yaml** há um setup **comentado** contendo o **Apache**, para **HABILITAR O APACHE** basta comentar o container do nginx e descomentar o apache
-
-
 
 ### Configuração dos servidores
 
@@ -56,8 +50,6 @@ O **APACHE** está em:
 * **./docker/apache/httpd.conf**
 
 * **./docker/apache/httpd-vhosts.conf**
-
-
 
 ## Permissões de usuário
 
@@ -116,8 +108,6 @@ Para contornar o problema, podem ser feito:
 - Colocar um proxy na frente, passando o cabeçalho **X-Real-IP**, afim de identificar o usuário original da request.
 
 - Configurar o xdebug para no xdebug.remote_connect_back=1, utilizar o cabeçalho  **X-Real-IP**, sendo definido na config: xdebug.remote_addr_header
-
-- 
 
 **Explicações do problema no Swarm**
 
