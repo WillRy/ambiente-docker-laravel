@@ -15,33 +15,33 @@ O ambiente está dividido em pastas contendo versões do PHP, seguindo o padrão
 
 ## Como o ambiente funciona
 
-O ambiente foi dividido em 4 principais containers:
+O ambiente foi dividido em 5 principais containers:
 
 - app: contendo o **PHP-FPM**, com os respectivos plugins e o **XDEBUG** . Este container também permite a personalização do php.ini, através de um arquivo **custom.ini** montado via bind volume.
 
 - nginx: Se comunica com o **PHP-FPM** via **FAST-CGI**
 
-- apache: **Opcional**, estando **comentado**, se comunica com o **PHP-FPM** via **FAST-CGI**
+- apache: **Opcional**, estando **comentado dentro do docker-compose**, se comunica com o **PHP-FPM** via **FAST-CGI**
 
 - mysql8: Container com o DB e script de inicialização
 
 - redis: Livre para customizações
 
+- node: Para realizar build de JS com webpack
+
 Principais ferramentas usadas internamente nos containers:
 
 * Foi aplicada a utilização da biblioteca **dockerize** nos containers, para
-  permitir que os containers respeitam a **ordem correta de inicialização**.
+  permitir que os containers respeitem a **ordem correta de inicialização**.
   Ex. Container do php inicializar somente após o MySQL estiver respondendo.
 
-* O container do **PHP espera o container de banco.** 
+* O container do **PHP espera o container de banco iniciar.** 
 
-* O container do **nginx/apache, espera o PHP estar disponível**
+* O container do **nginx/apache, espera o PHP estar inicializado**
 
-### Servidores
+## Configuração de servidores
 
 Por padrão está configurado o **NGINX**, porém no **docker-compose.yaml** há um setup **comentado** contendo o **Apache**, para **HABILITAR O APACHE** basta comentar o container do nginx e descomentar o apache
-
-### Configuração dos servidores
 
 O **NGINX** está em **./docker/nginx/nginx.conf**
 
@@ -50,14 +50,6 @@ O **APACHE** está em:
 * **./docker/apache/httpd.conf**
 
 * **./docker/apache/httpd-vhosts.conf**
-
-## Permissões de usuário
-
-Para evitar quaisquer problemas de permissões de usuário entre os containers
-e o host que está executando o ambiente, os containers(php e mysql) foram configurados para executarem com um usuário específico, contendo o ID de usuário **1000**, o mesmo ID utilizado por muitas distribuições Linux para o usuário padrão.
-
-Com essa personalização, não haverá conflitos de permissões em arquivos gerados
-pelos containers.
 
 ## Como executar o ambiente?
 
@@ -80,6 +72,27 @@ http://localhost:8000
 * Adicione no seu .gitignore os seguintes itens:
   * docker/dbdata: local onde estão os arquivos gerados pelo mysql
   * .composer: cache gerado pelo composer 2
+
+
+## Estrutura final de pastas
+
+```
+...suas pasta do laravel
+docker/
+docker-compose.yaml
+```
+
+**O docker compose e a pasta docker devem estar na raiz do projeto**
+
+
+## Permissões de usuário
+
+Para evitar quaisquer problemas de permissões de usuário entre os containers
+e o host que está executando o ambiente, os containers(php e mysql) foram configurados para executarem com um usuário específico, contendo o ID de usuário **1000**, o mesmo ID utilizado por muitas distribuições Linux para o usuário padrão.
+
+Com essa personalização, não haverá conflitos de permissões em arquivos gerados
+pelos containers.
+
 
 ## Exemplo de configuração das IDEs para debuggar
 

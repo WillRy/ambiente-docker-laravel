@@ -4,24 +4,26 @@ RUN apt-get update && \
     apt-get install -y \
     openssl \
     wget \
-    nodejs \
-    npm \
     #extensao necessária para o php
     zlib1g-dev \
     #GD
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
+    #Imagick
+    imagemagick \
+    libmagickwand-dev \
     #Intl
     libicu-dev \
+    #Zip
+    libzip-dev \
     #limpa apt
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip
 
 # RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+RUN pecl install xdebug imagick && docker-php-ext-enable xdebug imagick
 
 # atualiza timezone do php
 # RUN pecl install timezonedb

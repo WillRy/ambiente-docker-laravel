@@ -6,3 +6,5 @@ dbdata
 
 #cache do composer
 .composer
+
+.bash_history

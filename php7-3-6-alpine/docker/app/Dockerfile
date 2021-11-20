@@ -6,8 +6,6 @@ RUN apk add --no-cache \
     openssl \
     bash \
     mysql-client \
-    nodejs \
-    npm \
     #GD
     freetype-dev \
     libjpeg-turbo-dev \
@@ -16,13 +14,14 @@ RUN apk add --no-cache \
     imagemagick-dev \
     #intl
     icu-dev \
+    #Zip
+    libzip-dev \
     $PHPIZE_DEPS
-RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip
 
 RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
 
-RUN pecl install xdebug imagick \
-    && docker-php-ext-enable xdebug imagick
+RUN pecl install xdebug imagick && docker-php-ext-enable xdebug imagick
 
 # atualiza timezone do php
 RUN pecl install timezonedb

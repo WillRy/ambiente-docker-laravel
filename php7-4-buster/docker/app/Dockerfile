@@ -3,8 +3,6 @@ FROM php:7.4-fpm-buster
 RUN apt-get update && \
     apt-get install -y \
     openssl \
-    nodejs \
-    npm \
     wget \
     #GD
     libfreetype6-dev \
@@ -15,12 +13,13 @@ RUN apt-get update && \
     libmagickwand-dev \
     #Intl
     libicu-dev \
+    #Zip
+    libzip-dev \
     --no-install-recommends \      
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip
 
-RUN pecl install xdebug imagick \
-    && docker-php-ext-enable xdebug imagick
+RUN pecl install xdebug imagick && docker-php-ext-enable xdebug imagick
 
 # atualiza timezone do php
 # RUN pecl install timezonedb

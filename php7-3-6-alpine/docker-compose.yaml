@@ -6,11 +6,6 @@ services:
     container_name: app
     entrypoint: ./docker/app/entrypoint.sh
     restart: always
-    ports:
-      - "3000:3000"
-      - "35729:35729"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
     volumes:
       - .:/var/www
       - ./docker/app/custom.ini:/usr/local/etc/php/conf.d/custom.ini
@@ -86,6 +81,23 @@ services:
     container_name: redis
     expose:
       - 6379
+    networks:
+      - app-network
+
+
+  node:
+    build: docker/node
+    container_name: node
+    restart: always
+    ports:
+      - "3000:3000"
+      - "35729:35729"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/var/www
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     networks:
       - app-network
 
