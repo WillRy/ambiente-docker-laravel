@@ -17,6 +17,25 @@ services:
       - db
       - redis
 
+  # modphp:
+  #   build: docker/modphp
+  #   container_name: modphp
+  #   entrypoint: ./docker/modphp/entrypoint.sh
+  #   restart: always
+  #   ports:
+  #     - "8000:80"
+  #   volumes:
+  #     - .:/var/www
+  #     - ./docker/modphp/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+  #     - ./docker/modphp/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+  #     - "/etc/timezone:/etc/timezone:ro"
+  #     - "/etc/localtime:/etc/localtime:ro"
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - db
+  #     - redis
+
   nginx:
     build: docker/nginx
     container_name: nginx
