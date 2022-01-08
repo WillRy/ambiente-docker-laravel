@@ -1,4 +1,4 @@
-# Ambiente de Desenvolvimento - Laravel, MySQL 8, Redis e Suporte a MIX e Node.JS
+# Ambiente de Desenvolvimento - Laravel, MySQL 8, Suporte a Laravel MIX e Node.JS
 
 Este ambiente de desenvolvimento permite executar aplicações Laravel, dando suporte para:
 
