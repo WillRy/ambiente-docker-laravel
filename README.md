@@ -2,9 +2,8 @@
 
 Este ambiente de desenvolvimento permite executar aplicações Laravel, dando suporte para:
 
-- Laravel Mix(incluindo o hot reload do npm run watch)
+- Laravel Mix
 - GD e plugins imagick e xdebug
-- REDIS para filas
 - MySQL 8
 
 ## Organização do ambiente
@@ -15,19 +14,26 @@ O ambiente está dividido em pastas contendo versões do PHP, seguindo o padrão
 
 ## Como o ambiente funciona
 
-O ambiente foi dividido em 5 principais containers:
+O ambiente foi dividido em 3 principais containers e 5 containers opcionais
 
-- app: contendo o **PHP-FPM**, com os respectivos plugins e o **XDEBUG** . Este container também permite a personalização do php.ini, através de um arquivo **custom.ini** montado via bind volume.
+### Principais
 
-- nginx: Se comunica com o **PHP-FPM** via **FAST-CGI**
-
-- apache: **Opcional**, estando **comentado dentro do docker-compose**, se comunica com o **PHP-FPM** via **FAST-CGI**
+- modphp: O PHP e o Apache em execução com modphp(modulo do apache para php), com os respectivos plugins e o **XDEBUG** . Este container também permite a personalização do php.ini, através de um arquivo **custom.ini** montado via bind volume.
 
 - mysql8: Container com o DB e script de inicialização
 
-- redis: Livre para customizações
-
 - node: Para realizar build de JS com webpack
+
+### Opcionais(uso de php-fpm)
+
+Caso queira usar o php-fpm, existe o container do php fpm e dois servers (podendo escolher qual utilizar)
+
+- phpfpm: O php fpm para uso de fast-cgi
+
+- nginx: Se comunica com o **PHP-FPM** via **FAST-CGI**
+
+- apachefpm: Se comunica com o **PHP-FPM** via **FAST-CGI**
+
 
 Principais ferramentas usadas internamente nos containers:
 
@@ -41,11 +47,15 @@ Principais ferramentas usadas internamente nos containers:
 
 ## Configuração de servidores
 
-Por padrão está configurado o **NGINX**, porém no **docker-compose.yaml** há um setup **comentado** contendo o **Apache**, para **HABILITAR O APACHE** basta comentar o container do nginx e descomentar o apache
+Por padrão está configurado o **APACHE com MODPHP**, porém no **docker-compose.yaml** há um setup **comentado** contendo o **Apache** e **Nginx**, para uso do PHP-FPM.
+
+A configuração dos servidores está dessa forma:
+
+O **apache com mod** php: **./docker/modphp/vhost.conf**
 
 O **NGINX** está em **./docker/nginx/nginx.conf**
 
-O **APACHE** está em:
+O **APACHEFPM** está em:
 
 * **./docker/apache/httpd.conf**
 
@@ -53,7 +63,7 @@ O **APACHE** está em:
 
 ## Como executar o ambiente?
 
-* Clone o repositório, **copie a pasta da versão do php/SO desejado**, copie o **conteúdo interno** e cole dentro de uma pasta na raiz do projeto, com o **caminho "./docker/"**
+* Clone o repositório, escolha a versão do php que quer usar, e copie a pasta **docker** e **docker-compose.yaml** para a raiz do projeto laravel
 
 * Em seguida configure no .env as credenciais do banco de dados. **Lembrando que o host deve ser o nome do serviço docker responsável pelo banco**, neste caso é **db**. As credenciais podem ser encontradas no **docker-compose.yaml**
 
