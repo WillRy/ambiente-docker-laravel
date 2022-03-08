@@ -17,6 +17,7 @@ RUN apt-get update && \
     libicu-dev \
     #Zip
     libzip-dev \
+    unzip \
     #limpa apt
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip

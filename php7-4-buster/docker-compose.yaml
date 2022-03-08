@@ -13,8 +13,7 @@ services:
       - ./docker/modphp/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
       # - ./docker/modphp/teste.conf:/etc/apache2/conf-enabled/docker-php.conf
       - ./docker/modphp/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
+      - TZ=America/Sao_Paulo
     networks:
       - app-network
     depends_on:
@@ -31,8 +30,7 @@ services:
     volumes:
       - ./docker/dbdata:/var/lib/mysql
       - ./docker/mysql:/docker-entrypoint-initdb.d
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
+      - TZ=America/Sao_Paulo
     environment:
       - MYSQL_DATABASE=env_db
       - MYSQL_ROOT_PASSWORD=root
@@ -50,8 +48,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - .:/var/www
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
+      - TZ=America/Sao_Paulo
     networks:
       - app-network
 
@@ -68,8 +65,8 @@ networks:
   #   volumes:
   #     - .:/var/www
   #     - ./docker/phpfpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-  #     - "/etc/timezone:/etc/timezone:ro"
-  #     - "/etc/localtime:/etc/localtime:ro"
+  #     - TZ=America/Sao_Paulo
+  #     - TZ=America/Sao_Paulo
   #   networks:
   #     - app-network
   #   depends_on:
@@ -87,8 +84,7 @@ networks:
   #     WAIT: -wait tcp://phpfpm:9000
   #   volumes:
   #     - .:/var/www
-  #     - "/etc/timezone:/etc/timezone:ro"
-  #     - "/etc/localtime:/etc/localtime:ro"
+  #     - TZ=America/Sao_Paulo
   #   networks:
   #     - app-network
   #   depends_on:
@@ -108,8 +104,7 @@ networks:
   #     - .:/var/www
   #     - ./docker/apachefpm/httpd.conf:/usr/local/apache2/conf/httpd.conf
   #     - ./docker/apachefpm/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
-  #     - "/etc/timezone:/etc/timezone:ro"
-  #     - "/etc/localtime:/etc/localtime:ro"
+  #     - TZ=America/Sao_Paulo
   #   networks:
   #     - app-network
   #   depends_on:
