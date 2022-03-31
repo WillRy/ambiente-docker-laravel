@@ -8,4 +8,10 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d
 
+
+RUN mkdir -p /dockerfiles
+COPY . /dockerfiles
+RUN chmod +x /dockerfiles/entrypoint.sh
+ENTRYPOINT [ "/dockerfiles/entrypoint.sh" ]
+
 WORKDIR /var/www

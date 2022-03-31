@@ -17,6 +17,7 @@ RUN apt-get update && \
     libicu-dev \
     #Zip
     libzip-dev \
+    unzip \
     #limpa apt
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip
@@ -42,12 +43,20 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN usermod -u 1000 www-data
 
-WORKDIR /var/www
 
 RUN a2enmod rewrite && a2enmod proxy && a2dissite 000-default
-RUN rm -rf /var/www/html && ln -s public html
+RUN rm -rf /var/www/html
+RUN rm -rf /var/www/public
 RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
 
+# entrypoint
+RUN mkdir -p /dockerfiles
+COPY . /dockerfiles
+RUN chmod +x /dockerfiles/entrypoint.sh
+ENTRYPOINT [ "/dockerfiles/entrypoint.sh" ]
+
 USER www-data
+
+WORKDIR /var/www
 
 EXPOSE 9000

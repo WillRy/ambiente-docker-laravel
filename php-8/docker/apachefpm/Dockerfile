@@ -11,7 +11,13 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 RUN mkdir -p /var/www
 
-WORKDIR /var/www
 
 RUN usermod -u 1000 daemon
 
+# entrypoint
+RUN mkdir -p /dockerfiles
+COPY . /dockerfiles
+RUN chmod +x /dockerfiles/entrypoint.sh
+ENTRYPOINT [ "/dockerfiles/entrypoint.sh" ]
+
+WORKDIR /var/www
