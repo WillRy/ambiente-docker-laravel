@@ -41,8 +41,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN usermod -u 1000 www-data
 
 
+RUN a2enmod rewrite && a2enmod proxy && a2dissite 000-default
 RUN rm -rf /var/www/html
 RUN rm -rf /var/www/public
+RUN rm -rf /etc/apache2/sites-enabled/000-default.conf
 
 # entrypoint
 RUN mkdir -p /dockerfiles
