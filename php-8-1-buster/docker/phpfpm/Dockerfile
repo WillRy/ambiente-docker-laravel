@@ -17,13 +17,20 @@ RUN apt-get update && \
     libicu-dev \
     #Zip
     libzip-dev \
+    unzip \
+    # openssl
+    libcurl4-openssl-dev \
+    pkg-config \
+    libssl-dev \
     #limpa apt
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip
 
-# RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
+RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip sockets pcntl
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install imagick && docker-php-ext-enable imagick
+RUN pecl install redis && docker-php-ext-enable redis
+RUN pecl install mongodb && docker-php-ext-enable mongodb
 
-RUN pecl install xdebug imagick && docker-php-ext-enable xdebug imagick
 
 # atualiza timezone do php
 # RUN pecl install timezonedb

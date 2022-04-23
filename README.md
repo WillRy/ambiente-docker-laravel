@@ -119,23 +119,3 @@ O Xdebug está **configurado na porta 9001**, para evitar conflitos com o PHP-FP
 ![VSCODE](./midias/vscode.png)
 
 > A configuração é a com nome de "XDEBUG-DOCKER"
-
-## Debug em modo SWARM
-
-Caso esse ambiente seja configurado para modo SWARM, é necessário fazer alguns ajustes pois ele apresenta um modelo de rede diferente, contendo uma rede **overlay**, que possui alguns comportamentos específicos a fim de suportar clusters e replicas.
-
-Isso implica em um comportamento onde em certas requisições não é possível identificar o IP real do usuário, isso ocorre devido ao **ingress** e outros fatores de balanceamento do swarm, esse comportamento é similar ao que acontece em proxy reversos/load-balancer no **nginx**.
-
-Para contornar o problema, podem ser feito:
-
-- Colocar um proxy na frente, passando o cabeçalho **X-Real-IP**, afim de identificar o usuário original da request.
-
-- Configurar o xdebug para no xdebug.remote_connect_back=1, utilizar o cabeçalho  **X-Real-IP**, sendo definido na config: xdebug.remote_addr_header
-
-**Explicações do problema no Swarm**
-
-**Cenário real explicando o problema:** https://www.nerd.vision/post/x-real-ip-with-docker-swarm-and-tcp-lb
-
-**Issue do github, também com explicações:** https://github.com/moby/moby/issues/25526
-
-**Exemplod de proxy pass:** https://github.com/moby/moby/issues/25526#issuecomment-248224302
