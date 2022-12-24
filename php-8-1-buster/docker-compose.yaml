@@ -13,6 +13,8 @@ services:
       - ./docker/modphp/custom.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
       - TZ=America/Sao_Paulo
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       - app-network
     depends_on:
@@ -67,11 +69,12 @@ networks:
   #     - ./docker/phpfpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
   #   environment:
   #     - TZ=America/Sao_Paulo
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
   #   networks:
   #     - app-network
   #   depends_on:
   #     - db
-      
   # apachefpm:
   #   build: docker/apachefpm
   #   container_name: apachefpm
@@ -85,7 +88,7 @@ networks:
   #   volumes:
   #     - .:/var/www
   #     - ./docker/apachefpm/httpd.conf:/usr/local/apache2/conf/httpd.conf
-  #     - ./docker/apachefpm/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf 
+  #     - ./docker/apachefpm/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
   #   networks:
   #     - app-network
   #   depends_on:
@@ -107,4 +110,3 @@ networks:
   #     - app-network
   #   depends_on:
   #     - phpfpm
-      

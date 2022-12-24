@@ -22,10 +22,14 @@ RUN apt-get update && \
     libcurl4-openssl-dev \
     pkg-config \
     libssl-dev \
+    #ssh2
+    libssh2-1-dev \
     #limpa apt
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
 RUN docker-php-ext-install mysqli pdo_mysql bcmath exif gd intl zip sockets pcntl
+RUN pecl install https://pecl.php.net/get/ssh2-1.3.1.tgz && docker-php-ext-enable ssh2
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install redis && docker-php-ext-enable redis
