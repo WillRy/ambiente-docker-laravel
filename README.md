@@ -1,8 +1,8 @@
-# Ambiente de Desenvolvimento - Laravel, MySQL 8, Suporte a Laravel MIX e Node.JS
+# Ambiente de Desenvolvimento - Laravel, MySQL 8, Suporte a Laravel MIX / Vite e Node.JS
 
 Este ambiente de desenvolvimento permite executar aplicações Laravel, dando suporte para:
 
-- Laravel Mix
+- Laravel Mix / Vite
 - GD e plugins imagick e xdebug
 - MySQL 8
 
@@ -12,17 +12,54 @@ O ambiente está dividido em pastas contendo versões do PHP, seguindo o padrão
 
 **php-"versao"-"sistema-operacional"**
 
+## Como executar o ambiente?
+
+* Clone o repositório, escolha a versão do php que quer usar, e copie a pasta **docker** e **docker-compose.yaml** para a raiz do projeto laravel
+
+
+* Em seguida configure no .env as credenciais do banco de dados. **Lembrando que o host deve ser o nome do serviço docker responsável pelo banco**, neste caso é **db**. As credenciais podem ser encontradas no **docker-compose.yaml**
+
+
+* Em seguida, na raiz do ambiente, execute o comando:
+  
+  ```shell
+  # para garantir que a pasta com os entrypoints e demais infos tenha permissões de leitura/execução
+  sudo chmod 777 -R ./docker
+  docker-compose up -d
+  ```
+
+* Acesse o projeto na URL: 
+
+http://localhost:8000
+
+* Adicione no seu .gitignore os seguintes itens:
+  * docker/dbdata: local onde estão os arquivos gerados pelo mysql
+  * .composer: cache gerado pelo composer 2
+
+
+## Estrutura final de pastas
+
+```
+...suas pasta do laravel
+docker/
+docker-compose.yaml
+```
+
+**O docker compose e a pasta docker devem estar na raiz do projeto**
+
+
+
 ## Como o ambiente funciona
 
 O ambiente foi dividido em 3 principais containers e 5 containers opcionais
 
 ### Principais
 
-- modphp: O PHP e o Apache em execução com modphp(modulo do apache para php), com os respectivos plugins e o **XDEBUG** . Este container também permite a personalização do php.ini, através de um arquivo **custom.ini** montado via bind volume.
+- modphp: O PHP e o Apache em execução com modphp(modulo do apache para php), com os plugins e o **XDEBUG** . Este container também permite a personalização do php.ini, através de um arquivo **custom.ini** montado via bind volume.
 
 - mysql8: Container com o DB e script de inicialização
 
-- node: Para realizar build de JS com webpack
+- node: Para realizar build de JS com webpack ou vite
 
 ### Opcionais(uso de php-fpm)
 
@@ -60,39 +97,6 @@ O **APACHEFPM** está em:
 * **./docker/apache/httpd.conf**
 
 * **./docker/apache/httpd-vhosts.conf**
-
-## Como executar o ambiente?
-
-* Clone o repositório, escolha a versão do php que quer usar, e copie a pasta **docker** e **docker-compose.yaml** para a raiz do projeto laravel
-
-* Em seguida configure no .env as credenciais do banco de dados. **Lembrando que o host deve ser o nome do serviço docker responsável pelo banco**, neste caso é **db**. As credenciais podem ser encontradas no **docker-compose.yaml**
-
-* Em seguida, na raiz do ambiente, execute o comando:
-  
-  ```shell
-  # para garantir que a pasta com os entrypoints e demais infos tenha permissões de leitura/execução
-  sudo chmod 777 -R ./docker
-  docker-compose up -d
-  ```
-
-* Acesse o projeto na URL: 
-
-http://localhost:8000
-
-* Adicione no seu .gitignore os seguintes itens:
-  * docker/dbdata: local onde estão os arquivos gerados pelo mysql
-  * .composer: cache gerado pelo composer 2
-
-
-## Estrutura final de pastas
-
-```
-...suas pasta do laravel
-docker/
-docker-compose.yaml
-```
-
-**O docker compose e a pasta docker devem estar na raiz do projeto**
 
 
 ## Permissões de usuário
