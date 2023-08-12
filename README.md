@@ -2,8 +2,8 @@
 
 Este ambiente de desenvolvimento permite executar aplicações Laravel, dando suporte para:
 
-- Laravel Mix / Vite
-- GD e plugins imagick e xdebug
+- Varias versões do php
+- Diversos plugins do php, como GD,imagick, redis, mongod e xdebug
 - MySQL 8
 
 ## Organização do ambiente
@@ -51,15 +51,13 @@ docker-compose.yaml
 
 ## Como o ambiente funciona
 
-O ambiente foi dividido em 3 principais containers e 5 containers opcionais
+O ambiente foi dividido em 2 principais containers e 5 containers opcionais
 
 ### Principais
 
 - modphp: O PHP e o Apache em execução com modphp(modulo do apache para php), com os plugins e o **XDEBUG** . Este container também permite a personalização do php.ini, através de um arquivo **custom.ini** montado via bind volume.
 
 - mysql8: Container com o DB e script de inicialização
-
-- node: Para realizar build de JS com webpack ou vite
 
 ### Opcionais(uso de php-fpm)
 

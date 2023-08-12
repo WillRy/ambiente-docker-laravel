@@ -39,21 +39,6 @@ services:
     networks:
       - app-network
 
-  node:
-    build: docker/node
-    container_name: node
-    restart: always
-    ports:
-      - "3000:3000"
-      - "35729:35729"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - TZ=America/Sao_Paulo
-    volumes:
-      - .:/var/www
-    networks:
-      - app-network
-
 networks:
   app-network:
     driver: bridge
