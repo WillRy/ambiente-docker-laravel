@@ -33,7 +33,7 @@ RUN pecl install https://pecl.php.net/get/ssh2-1.3.1.tgz && docker-php-ext-enabl
 RUN pecl install xdebug-2.7.0 && docker-php-ext-enable xdebug
 RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install redis && docker-php-ext-enable redis
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN pecl install mongodb-1.16.0 && docker-php-ext-enable mongodb
 
 
 # atualiza timezone do php
