@@ -1,0 +1,130 @@
+version: "3.7"
+
+services:
+  # modphp:
+  #   build: docker/modphp
+  #   container_name: modphp
+  #   restart: always
+  #   ports:
+  #     - "8000:80"
+  #   volumes:
+  #     - .:/var/www
+  #     - ./docker/modphp/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+  #     - ./docker/modphp/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+  #   environment:
+  #     - TZ=America/Sao_Paulo
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - db
+
+  phpfpm:
+      build: docker/phpfpm
+      container_name: phpfpm
+      entrypoint: ./docker/phpfpm/entrypoint.sh
+      restart: always
+      volumes:
+        - .:/var/www
+        - ./docker/phpfpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      environment:
+        - TZ=America/Sao_Paulo
+      extra_hosts:
+        - host.docker.internal:host-gateway
+      networks:
+        - app-network
+      depends_on:
+        - db
+
+  nginx:
+      build: docker/nginx
+      container_name: nginx
+      restart: always
+      tty: true
+      ports:
+        - "8000:80"
+      environment:
+        WAIT: -wait tcp://phpfpm:9000
+        TZ: America/Sao_Paulo
+      volumes:
+        - .:/var/www
+      networks:
+        - app-network
+      depends_on:
+        - phpfpm
+
+  db:
+    build: docker/mysql
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    container_name: db
+    restart: always
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/dbdata:/var/lib/mysql
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_DATABASE=env_db
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=America/Sao_Paulo
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+  # CONFIGURAÇÕES OPCIONAIS: PARA USAR PHP FPM, ESCOLHA O NGINX OU O APACHEFPM
+  # phpfpm:
+  #   build: docker/phpfpm
+  #   container_name: phpfpm
+  #   entrypoint: ./docker/phpfpm/entrypoint.sh
+  #   restart: always
+  #   volumes:
+  #     - .:/var/www
+  #     - ./docker/phpfpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+  #   environment:
+  #     - TZ=America/Sao_Paulo
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - db
+  # apachefpm:
+  #   build: docker/apachefpm
+  #   container_name: apachefpm
+  #   restart: always
+  #   tty: true
+  #   ports:
+  #     - "8000:80"
+  #   environment:
+  #     WAIT: -wait tcp://phpfpm:9000
+  #     TZ: America/Sao_Paulo
+  #   volumes:
+  #     - .:/var/www
+  #     - ./docker/apachefpm/httpd.conf:/usr/local/apache2/conf/httpd.conf
+  #     - ./docker/apachefpm/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - phpfpm
+
+  # nginx:
+  #   build: docker/nginx
+  #   container_name: nginx
+  #   restart: always
+  #   tty: true
+  #   ports:
+  #     - "8000:80"
+  #   environment:
+  #     WAIT: -wait tcp://phpfpm:9000
+  #     TZ: America/Sao_Paulo
+  #   volumes:
+  #     - .:/var/www
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - phpfpm
