@@ -1,7 +1,6 @@
 version: "3.7"
 
 services:
-
   phpfpm:
       build: docker/phpfpm
       container_name: phpfpm
@@ -58,6 +57,7 @@ networks:
   app-network:
     driver: bridge
 
+  # CONFIGURAÇÕES OPCIONAIS: PARA USAR PHP FPM, ESCOLHA O NGINX OU O APACHEFPM
 
   # modphp:
   #   build: docker/modphp
@@ -78,7 +78,6 @@ networks:
   #   depends_on:
   #     - db
   
-  # CONFIGURAÇÕES OPCIONAIS: PARA USAR PHP FPM, ESCOLHA O NGINX OU O APACHEFPM
   # phpfpm:
   #   build: docker/phpfpm
   #   container_name: phpfpm
