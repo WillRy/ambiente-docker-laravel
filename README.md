@@ -10,11 +10,11 @@ Este ambiente de desenvolvimento permite executar aplicações Laravel, dando su
 
 O ambiente está dividido em pastas contendo versões do PHP, seguindo o padrão:
 
-**php-"versao"-"sistema-operacional"**
+**php-"versao"**
 
 ## Como executar o ambiente?
 
-* Clone o repositório, escolha a versão do php que quer usar, e copie a pasta **docker** e **docker-compose.yaml** para a raiz do projeto laravel
+* Clone o repositório, escolha a versão do php que quer usar, dentro da pasta da versão de php que deseja usar, copie a pasta **docker** e **docker-compose.yaml** para a raiz do projeto laravel
 
 
 * Em seguida configure no .env as credenciais do banco de dados. **Lembrando que o host deve ser o nome do serviço docker responsável pelo banco**, neste caso é **db**. As credenciais podem ser encontradas no **docker-compose.yaml**
@@ -68,6 +68,8 @@ Caso queira usar o php-fpm, existe o container do php fpm e dois servers (podend
 - nginx: Se comunica com o **PHP-FPM** via **FAST-CGI**
 
 - apachefpm: Se comunica com o **PHP-FPM** via **FAST-CGI**
+
+**Neste caso remova o modphp do docker-compose.yaml e "descomente o phpfpm e o servidor de sua escolha(nginx ou apachefpm)"**
 
 
 Principais ferramentas usadas internamente nos containers:

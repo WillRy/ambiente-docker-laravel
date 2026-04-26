@@ -1,4 +1,4 @@
-FROM php:8.0.2-fpm-buster
+FROM php:8.0-fpm-bullseye
 
 RUN apt-get update && \
     apt-get install -y \
@@ -33,7 +33,7 @@ RUN pecl install https://pecl.php.net/get/ssh2-1.3.1.tgz && docker-php-ext-enabl
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install redis && docker-php-ext-enable redis
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN pecl install mongodb-1.9.0 && docker-php-ext-enable mongodb
 
 # atualiza timezone do php
 # RUN pecl install timezonedb
@@ -43,7 +43,7 @@ RUN pecl install mongodb && docker-php-ext-enable mongodb
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install -j$(nproc) gd
 
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION=v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz

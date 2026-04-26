@@ -1,4 +1,4 @@
-FROM php:8.3-apache-bullseye
+FROM php:8.3-apache-trixie
 
 RUN apt-get update && \
     apt-get install -y \

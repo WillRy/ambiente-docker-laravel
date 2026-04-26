@@ -8,3 +8,7 @@ dbdata
 .composer
 
 .bash_history
+
+.cache
+.config
+.local

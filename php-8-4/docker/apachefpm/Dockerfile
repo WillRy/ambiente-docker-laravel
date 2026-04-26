@@ -1,4 +1,4 @@
-FROM httpd:2.4.46
+FROM httpd:2.4.66
 
 RUN apt-get update && \
     apt-get install -y \

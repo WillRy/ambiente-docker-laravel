@@ -1,40 +1,25 @@
 version: "3.7"
 
 services:
+  modphp:
+    build: docker/modphp
+    container_name: modphp
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/modphp/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+      - ./docker/modphp/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    environment:
+      - TZ=America/Sao_Paulo
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - app-network
+    depends_on:
+      - db
 
-  phpfpm:
-      build: docker/phpfpm
-      container_name: phpfpm
-      entrypoint: ./docker/phpfpm/entrypoint.sh
-      restart: always
-      volumes:
-        - .:/var/www
-        - ./docker/phpfpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-      environment:
-        - TZ=America/Sao_Paulo
-      extra_hosts:
-        - host.docker.internal:host-gateway
-      networks:
-        - app-network
-      depends_on:
-        - db
-
-  nginx:
-      build: docker/nginx
-      container_name: nginx
-      restart: always
-      tty: true
-      ports:
-        - "8000:80"
-      environment:
-        WAIT: -wait tcp://phpfpm:9000
-        TZ: America/Sao_Paulo
-      volumes:
-        - .:/var/www
-      networks:
-        - app-network
-      depends_on:
-        - phpfpm
 
   db:
     build: docker/mysql
@@ -82,7 +67,6 @@ networks:
   # phpfpm:
   #   build: docker/phpfpm
   #   container_name: phpfpm
-  #   entrypoint: ./docker/phpfpm/entrypoint.sh
   #   restart: always
   #   volumes:
   #     - .:/var/www

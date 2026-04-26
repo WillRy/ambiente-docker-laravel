@@ -1,4 +1,4 @@
-FROM php:8.4-apache-bullseye
+FROM php:8.4-apache-trixie
 
 RUN apt-get update && \
     apt-get install -y \
@@ -48,7 +48,7 @@ RUN pecl install mongodb && docker-php-ext-enable mongodb
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install -j$(nproc) gd
 
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION=v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz

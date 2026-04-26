@@ -47,7 +47,6 @@ networks:
   # phpfpm:
   #   build: docker/phpfpm
   #   container_name: phpfpm
-  #   entrypoint: ./docker/phpfpm/entrypoint.sh
   #   restart: always
   #   volumes:
   #     - .:/var/www
